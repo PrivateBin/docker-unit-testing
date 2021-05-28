@@ -16,12 +16,9 @@ cd /tmp/repo/js
 # …(in background)
 [ -z "$COMMAND" ] && mocha -c > /tmp/mocha.out 2>&1 &
 
-# run fake-gcs-server (in background)
-[ "$COMMAND" = phpunit -o -z "$COMMAND" ] && fake-gcs-server -backend memory &
-
 # run phpunit (in foreground)
 cd /tmp/repo/tst
-[ "$COMMAND" = phpunit -o -z "$COMMAND" ] && phpunit --no-coverage --colors=always "$@"
+[ "$COMMAND" = phpunit -o -z "$COMMAND" ] && /usr/local/vendor/bin/phpunit --no-coverage --colors=always "$@"
 
 # present mocha results, when done
 [ -z "$COMMAND" ] && wait && cat /tmp/mocha.out

@@ -4,7 +4,7 @@ LABEL maintainer="support@privatebin.org"
 
 RUN \
 # Install dependencies
-    apk add --no-cache binutils composer php7 php7-json php7-gd php7-opcache \
+    apk add --no-cache composer php7 php7-json php7-gd php7-opcache \
         php7-pdo_sqlite php7-mbstring php7-dom php7-xml php7-xmlwriter \
         php7-tokenizer php7-fileinfo nodejs npm mailcap \
 # Install npm modules
@@ -15,14 +15,8 @@ RUN \
 # Install composer modules
     && cd /usr/local \
     && composer require phpunit/phpunit:^5.0 \
-    && ln -s /usr/local/vendor/bin/phpunit bin/phpunit \
-# Install fake Google Cloud Storage API server
-    && wget -qO /tmp/fake-gcs-server.tar.gz https://github.com/fsouza/fake-gcs-server/releases/download/v1.25.0/fake-gcs-server_1.25.0_Linux_amd64.tar.gz \
-    && cd /usr/local/bin \
-    && tar -xzf /tmp/fake-gcs-server.tar.gz fake-gcs-server \
-    && strip fake-gcs-server \
 # cleanup to reduce the already large image size
-    && apk del --no-cache binutils composer npm \
+    && apk del --no-cache composer npm \
     && rm -rf /bin/.cache \
         /bin/node-prune \
         /etc/mailcap \
