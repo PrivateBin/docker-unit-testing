@@ -14,7 +14,7 @@ RUN \
     && node-prune /usr/lib/node_modules \
 # Install composer modules
     && cd /usr/local \
-    && composer require phpunit/phpunit:^5.0 \
+    && composer require phpunit/phpunit:^5.0 google/cloud-storage:1.23.1 \
 # cleanup to reduce the already large image size
     && apk del --no-cache composer npm \
     && rm -rf /bin/.cache \
