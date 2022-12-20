@@ -10,11 +10,11 @@ RUN \
 # Install npm modules
     && npm config set unsafe-perm=true \
     && npm install -g mocha jsverify jsdom@9 jsdom-global@2 mime-types @peculiar/webcrypto jsdom-url fake-indexeddb \
-    && wget -qO- https://install.goreleaser.com/github.com/tj/node-prune.sh | sh \
+    && wget -qO- https://gobinaries.com/tj/node-prune | sh \
     && node-prune /usr/local/lib/node_modules \
 # Install composer modules
     && cd /usr/local \
-    && composer require phpunit/phpunit:^5.0 google/cloud-storage:1.23.1 \
+    && composer require phpunit/phpunit:^5.7 google/cloud-storage:1.30.1 \
 # cleanup to reduce the already large image size
     && apk del --no-cache composer npm \
     && rm -rf /bin/.cache \
