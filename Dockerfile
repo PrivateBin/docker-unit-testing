@@ -1,28 +1,27 @@
-FROM alpine:3.14
+FROM alpine:3.18
 
 LABEL maintainer="support@privatebin.org"
 
 RUN \
 # Install dependencies
-    apk add --no-cache composer php7 php7-json php7-gd php7-opcache \
-        php7-pdo_sqlite php7-mbstring php7-dom php7-xml php7-xmlwriter \
-        php7-tokenizer php7-fileinfo nodejs npm mailcap \
+    apk add --no-cache composer php81 php81-json php81-gd php81-opcache \
+        php81-pdo_sqlite php81-mbstring php81-dom php81-xml php81-xmlwriter \
+        php81-tokenizer php81-fileinfo nodejs npm mailcap \
 # Install npm modules
-    && npm config set unsafe-perm=true \
     && npm install -g mocha jsverify jsdom@9 jsdom-global@2 mime-types @peculiar/webcrypto jsdom-url fake-indexeddb \
     && wget -qO- https://gobinaries.com/tj/node-prune | sh \
-    && node-prune /usr/local/lib/node_modules \
-# Install composer modules
     && cd /usr/local \
-    && composer require phpunit/phpunit:^5.7 google/cloud-storage:1.30.1 \
+    && node-prune lib/node_modules \
+# Install composer modules
+    && composer require phpunit/phpunit:^9 google/cloud-storage:1.32.0 \
 # cleanup to reduce the already large image size
     && apk del --no-cache composer npm \
     && rm -rf /bin/.cache \
-        /bin/node-prune \
         /etc/mailcap \
         /root/.??* \
         /tmp/* \
         /usr/lib/node_modules/npm \
+        /usr/local/bin/node-prune \
         /usr/local/composer.* \
         /var/log/*
 
